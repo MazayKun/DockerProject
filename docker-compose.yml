@@ -4,9 +4,9 @@ services:
   postgresql-service:
     image: postgres
     restart: always
-    volumes:
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: openproject
+      POSTGRES-USER: openproject
 
   openproject-service:
     image: openproject/community
@@ -32,4 +32,4 @@ services:
     depends_on: 
       - postgresql-service
     ports:
-      - 8083:80
+      - 8083:3000
