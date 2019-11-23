@@ -1,0 +1,35 @@
+version: '3'
+services:
+  
+  postgresql-service:
+    image: postgres
+    restart: always
+    volumes:
+    environment:
+      POSTGRES_PASSWORD: password
+
+  openproject-service:
+    image: openproject/community
+    depends_on: 
+      - postgresql-service
+    environment:
+      - DATABASE_URL=postgresql-service
+      - SECRET_KEY_BASE=secret 
+    ports:
+      - 8081:80
+  
+  owncloud-service:
+    image: owncloud
+    restart: always
+    depends_on: 
+      - postgresql-service
+    ports:
+      - 8082:80
+  
+  gogs-service:
+    image: gogs/gogs
+    restart: always
+    depends_on: 
+      - postgresql-service
+    ports:
+      - 8083:80
