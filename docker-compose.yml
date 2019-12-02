@@ -2,14 +2,14 @@ version: '3'
 services:
   
   postgresql-service:
-    image: postgres
+    image: 'postgres'
     restart: always
     environment:
       POSTGRES_PASSWORD: openproject
       POSTGRES-USER: openproject
 
   openproject-service:
-    image: openproject/community
+    image: 'openproject/community:9.0'
     depends_on: 
       - postgresql-service
     environment:
