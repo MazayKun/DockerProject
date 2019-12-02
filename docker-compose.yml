@@ -33,3 +33,4 @@ services:
       - postgresql-service
     ports:
       - 8083:3000
+      

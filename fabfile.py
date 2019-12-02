@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from fabric import Connection, Config
 
 config = Config(overrides={'sudo': {'password': '123'} , 'Password' : '123'})
