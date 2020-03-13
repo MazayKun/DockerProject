@@ -1,36 +1,43 @@
 version: '3'
 services:
   
-  postgresql-service:
-    image: 'postgres'
+  postgresql:
+    build: .
     restart: always
     environment:
-      POSTGRES_PASSWORD: openproject
-      POSTGRES-USER: openproject
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+    ports: 
+      - 5434:5432
 
-  openproject-service:
-    image: 'openproject/community:9.0'
+  openproject:
+    image: openproject/community:10
     depends_on: 
-      - postgresql-service
+      - postgresql
     environment:
-      - DATABASE_URL=postgresql-service
-      - SECRET_KEY_BASE=secret 
+      - POSTGRES_DATABASE_URL="postgresql://admin:admin@localhost:5434/openproject"
+      - SECRET_KEY_BASE=secret
     ports:
       - 8081:80
   
-  owncloud-service:
+  owncloud:
     image: owncloud
     restart: always
     depends_on: 
-      - postgresql-service
+      - postgresql
+    environment: 
+      - OWNCLOUD_VERSION=latest
+      - OWNCLOUD_DOMAIN=localhost
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin
     ports:
       - 8082:80
   
-  gogs-service:
+  gogs:
     image: gogs/gogs
     restart: always
     depends_on: 
-      - postgresql-service
+      - postgresql
     ports:
       - 8083:3000
       

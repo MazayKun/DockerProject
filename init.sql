@@ -1,0 +1,3 @@
+CREATE DATABASE owncloud;
+CREATE DATABASE gogs;
+CREATE DATABASE openproject;
